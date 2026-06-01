@@ -20,37 +20,46 @@ public class Driver {
     }
 
     // getters 
+
+    // get age
     public int getAge() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate birthDate = LocalDate.parse(birthdate, formatter);
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
     
+    // get driver id
     public String getDriverID() {
         return driverID;
     }
-
+    
+    // get name
     public String getName() {
         return name;
     }
 
+    // get years of experience
     public int getExperienceYears() {
         return experienceYears;
     }
 
+    // get type of license
     public String getLicenseType() {
         return licenseType;
     }
 
+    // get address
     public String getAddress() {
         return address;
     }
 
+    // get birth date
     public String getBirthdate() {
         return birthdate;
     }
 
     // driver conditions
+    // checks driver id is valid
     public boolean isValidDriverID() {
         // driverID must be exactly 10 chars long
         if (driverID == null) {
@@ -104,6 +113,7 @@ public class Driver {
         return true;
     }
 
+    // checks address is valid
     public boolean isValidAddress() {
         // address must be in specific format
         int dividers = 0;
@@ -132,6 +142,7 @@ public class Driver {
         return true;
     }
 
+    // checks birth date is valid
     public boolean isValidBirthdate() {
         // birthdate must be in specific format
         if (birthdate == null || birthdate.length() != 10) {
@@ -188,7 +199,9 @@ public class Driver {
 
     }
 
+    // checks license type is valid
     public boolean updateLicenseType(String newLicenseType) {
+        // if years of experience is over 10, we cannot change type of license
         if (experienceYears > 10) {
             return false;
         }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class DriverTest {
     // D1
-    // normal case
+    // normal case for valid id
     @Test
     void validDriverIDShouldPass() {
         Driver busDriver = new Driver(
@@ -19,7 +19,7 @@ public class DriverTest {
         assertTrue(busDriver.isValidDriverID());
     }
 
-    // invalid case
+    // invalid case - testing id is too short
     @Test
     void driverIDTooShortShouldFail() {
             Driver busDriver = new Driver(
@@ -33,21 +33,7 @@ public class DriverTest {
         assertFalse(busDriver.isValidDriverID());
     }
 
-    // invalid case
-    // @Test // COME BACK AFTER DATABASE
-    // void driverIDNotUniqueShouldFail() {
-    //     Driver busDriver = new Driver(
-    //         "34jdA_@HRF", 
-    //         "Vanessa", 
-    //         10, 
-    //         "light", 
-    //         ""72|Brown Street|Melbourne|Victoria|Australia", 
-    //         "25-05-2005"
-    //     );
-    //     assertTrue(busDriver.isValidDriverID());
-    // }
-
-    // invalid case
+    // invalid case - testing id is too long
     @Test
     void driverIDTooLongShouldFail() {
         Driver busDriver = new Driver(
@@ -61,7 +47,7 @@ public class DriverTest {
         assertFalse(busDriver.isValidDriverID());
     }
 
-    // invalid case
+    // invalid case - id starts with 1
     @Test
     void driverIDStartingWithOneShouldFail() {
         Driver busDriver = new Driver(
@@ -75,7 +61,7 @@ public class DriverTest {
         assertFalse(busDriver.isValidDriverID());
     }
 
-    // invalid case
+    // invalid case - id only has one special character
     @Test
     void driverIDWithOneSpecialCharacterShouldFail() {
         Driver busDriver = new Driver(
@@ -89,7 +75,7 @@ public class DriverTest {
         assertFalse(busDriver.isValidDriverID());
     }
 
-    // invalid case
+    // invalid case - id ends in lower case letter
     @Test
     void driverIDEndingWithLowercaseLettersShouldFail() {
         Driver busDriver = new Driver(
@@ -103,7 +89,7 @@ public class DriverTest {
         assertFalse(busDriver.isValidDriverID());
     }
 
-    // edge case
+    // edge case - id has ten characters
     @Test
     void driverIDWithExactlyTenCharactersShouldPass() {
         Driver busDriver = new Driver(
@@ -117,7 +103,7 @@ public class DriverTest {
         assertTrue(busDriver.isValidDriverID());
     }
 
-    // edge case
+    // edge case - id has two special characters
     @Test
     void driverIDWithExactlyTwoSpecialCharactersShouldPass() {
         Driver busDriver = new Driver(
@@ -132,7 +118,7 @@ public class DriverTest {
     }
 
     // D2
-    // normal case
+    // normal case for address
     @Test
     void addressInRightFormatShouldPass() {
         Driver busDriver = new Driver(
@@ -146,7 +132,7 @@ public class DriverTest {
         assertTrue(busDriver.isValidAddress());
     }
 
-    // invalid case
+    // invalid case - address in bad format
     @Test
     void addressInWrongFormatShouldFail() {
         Driver busDriver = new Driver(
@@ -160,7 +146,7 @@ public class DriverTest {
         assertFalse(busDriver.isValidAddress());
     }
 
-    // invalid case
+    // invalid case - not all the fields being in address
     @Test
     void addressWithMissingFieldShouldFail() {
         Driver busDriver = new Driver(
@@ -175,7 +161,7 @@ public class DriverTest {
     }
 
     // D3
-    // normal case
+    // normal case for birthdate
     @Test
     void birthdateInRightFormatShouldPass() {
          Driver busDriver = new Driver(
@@ -189,7 +175,7 @@ public class DriverTest {
         assertTrue(busDriver.isValidBirthdate());
     }
 
-    // invalid case
+    // invalid case - birthdate in bad format
     @Test
     void birthdateInWrongFormatShouldFail() {
          Driver busDriver = new Driver(
@@ -203,7 +189,7 @@ public class DriverTest {
         assertFalse(busDriver.isValidBirthdate());
     }
 
-    // invalid case
+    // invalid case - birthdate with day that doesn't exist
     @Test
     void birthdateWithInvalidDayShouldFail() {
          Driver busDriver = new Driver(
@@ -218,7 +204,7 @@ public class DriverTest {
     }
 
     // D4
-    // normal case
+    // normal case for license type
     @Test 
     void updateLicenseTypeShouldPass() {
         Driver driver = new Driver(
@@ -233,7 +219,7 @@ public class DriverTest {
         assertEquals("Heavy", driver.getLicenseType());
     }
 
-    // invalid case
+    // invalid case - ensuring if experience is over ten years, license type cannot be updated
     @Test 
     void updateLicenseTypeWithOverTenYearsExperienceShouldFail() {
     Driver driver = new Driver(
@@ -248,7 +234,7 @@ public class DriverTest {
     assertEquals("light", driver.getLicenseType());
     }
 
-    // edge case
+    // edge case - updating license type
     @Test
     void updateLicenseTypeWithExactlyTenYearsExperienceShouldPass() {
             Driver driver = new Driver(
@@ -263,7 +249,7 @@ public class DriverTest {
     assertEquals("Heavy", driver.getLicenseType());
     }
 
-    // D5
+    // D5 - ensuring license type update doesnt change id or name
     @Test
     void updateLicenseTypeShouldNotChangeDriverIDOrName() {
         Driver driver = new Driver(
