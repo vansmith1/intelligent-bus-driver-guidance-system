@@ -42,18 +42,43 @@ public class Driver {
 
     // driver conditions
     public boolean isValidDriverID() {
-        return false;
+        // driverID must be unique DATABASE
+        // driverID must be exactly 10 chars long
+        int length = driverID.length();
+
+        if (length != 10) {
+            return false;
+        }
+
+        // first two characters cant be 0 or 1
+        char first = driverID.charAt(0);
+        char second = driverID.charAt(1);
+
+        if (first == 0 || first == 1) {
+            return false;
+        }
+        if (second == 0 || second == 1) {
+            return false;
+        }
+
+        
+        // must be at least 2 special characters between characters 3 and 8
+        // last two characters must be uppercase letters
+        return true;
     }
 
     public boolean isValidAddress() {
+        // address must be in specific format
         return false;
     }
 
     public boolean isValidBirthdate() {
+        // birthdate must follow certain format
         return false;
     }
 
     public boolean updateLicenseType() {
+        // if driver experience > 10 years, dont change type
         return false;
     }
 }
