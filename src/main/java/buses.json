@@ -1,0 +1,28 @@
+{
+  "buses": [
+    {
+      "busID": "12345678",
+      "capacity": 40,
+      "fuelLevel": 80.0,
+      "fuelType": "Diesel"
+    },
+    {
+      "busID": "23456789",
+      "capacity": 50,
+      "fuelLevel": 65.5,
+      "fuelType": "Hybrid"
+    },
+    {
+      "busID": "34567890",
+      "capacity": 45,
+      "fuelLevel": 90.0,
+      "fuelType": "Electricity"
+    },
+    {
+      "busID": "45678901",
+      "capacity": 60,
+      "fuelLevel": 55.0,
+      "fuelType": "Diesel"
+    }
+  ]
+}
