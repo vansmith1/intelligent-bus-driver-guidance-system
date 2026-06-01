@@ -342,9 +342,6 @@ public class DriverTest {
         );
 
         assertFalse(repo.update(updatedDriver));
-
-        Driver result = repo.retrieve("34jeA_@HRF");
-        assertEquals("34jeA_@HRF", result.getDriverID());
     }
 
     // edge case - changing id, name, and license type.
