@@ -52,8 +52,13 @@ public class Driver {
 
     // driver conditions
     public boolean isValidDriverID() {
-        // driverID must be unique DATABASE
+        // driverID must be unique DATABASE assertNotSame (a, b) 
+
         // driverID must be exactly 10 chars long
+        if (driverID == null) {
+            return false;
+        }
+
         int length = driverID.length();
 
         if (length != 10) {
@@ -103,16 +108,95 @@ public class Driver {
 
     public boolean isValidAddress() {
         // address must be in specific format
-        return false;
+        int dividers = 0;
+
+        for (int i = 0; i < address.length(); i++) {
+            if (address.charAt(i) == '|') {
+                dividers++;
+            }
+        }
+
+        // missing field
+        if (dividers != 4) {
+            return false;
+        }
+
+        // missing field at start or end
+        if (address.charAt(0) == '|' || address.charAt(address.length() - 1) == '|') {
+            return false;
+        }
+
+        // missing middle field
+        if (address.contains("||")) {
+            return false;
+        }
+
+        return true;
     }
 
     public boolean isValidBirthdate() {
-        // birthdate must follow certain format
-        return false;
+        // address must be in specific format
+        if (birthdate == null || birthdate.length() != 10) {
+            return false;
+        }
+
+        int dividers = 0;
+
+        for (int i = 0; i < birthdate.length(); i++) {
+            if (birthdate.charAt(i) == '-') {
+                dividers++;
+            }
+        }
+
+        // missing field
+        if (dividers != 2) {
+            return false;
+        }
+
+        // missing field at start or end
+        if (birthdate.charAt(0) == '-' || birthdate.charAt(birthdate.length() - 1) == '-') {
+            return false;
+        }
+
+        // missing middle field
+        if (birthdate.contains("--")) {
+            return false;
+        }
+
+        int day = Integer.parseInt(birthdate.substring(0, 2));
+        int month = Integer.parseInt(birthdate.substring(3, 5));
+
+        // checks valid day
+        if (day < 1 || day > 31) {
+            return false;
+        }
+
+        // checks valid month
+        if (month < 1 || month > 12) {
+            return false;
+        }
+        
+        // keeps day at 2 numbers
+        if (birthdate.charAt(2) != '-') {
+            return false;
+        }
+        
+        // keeps month at 2 numbers
+        if (birthdate.charAt(5) != '-') {
+            return false;
+        }
+
+        return true;
+
     }
 
-    public boolean updateLicenseType() {
-        // if driver experience > 10 years, dont change type
-        return false;
+    public boolean updateLicenseType(String newLicenseType) {
+        if (experienceYears > 10) {
+            return false;
+        }
+
+        this.licenseType = newLicenseType;
+        
+        return true;
     }
 }
