@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
 public class Driver {
     private String driverID;
     private String name;
@@ -15,7 +19,13 @@ public class Driver {
         this.birthdate = birthdate;
     }
 
-    // getters
+    // getters 
+    public int getAge() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate birthDate = LocalDate.parse(birthdate, formatter);
+        return Period.between(birthDate, LocalDate.now()).getYears();
+    }
+    
     public String getDriverID() {
         return driverID;
     }
@@ -54,16 +64,40 @@ public class Driver {
         char first = driverID.charAt(0);
         char second = driverID.charAt(1);
 
-        if (first == 0 || first == 1) {
-            return false;
-        }
-        if (second == 0 || second == 1) {
+        if (first < '2' || first > '9') {
             return false;
         }
 
-        
+        if (second < '2' || second > '9') {
+            return false;
+        }
+
         // must be at least 2 special characters between characters 3 and 8
+        int special = 0;
+
+        for (int i = 2; i <= 7; ++i) {
+            char character = driverID.charAt(i);
+            
+            if (!Character.isLetterOrDigit(character)) {
+                special++;
+            }
+        }
+
+        if (special < 2) {
+            return false;
+        }
+
         // last two characters must be uppercase letters
+        char last = driverID.charAt(driverID.length() - 1);
+        char secondLast = driverID.charAt(driverID.length() - 2);
+
+        if (!(Character.isUpperCase(last))) {
+            return false;
+        }
+        if (!(Character.isUpperCase(secondLast))) {
+            return false;
+        }
+        
         return true;
     }
 
