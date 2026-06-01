@@ -1,5 +1,8 @@
-import java.io.*;
-import java.nio.file.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -67,7 +70,15 @@ public class DriverRepository {
                     System.err.println("Update denied - experience exceeds 10 years");
                     return false;
                 }
-                drivers.put(i, toJSON(updatedDriver));
+                Driver safeUpdatedDriver = new Driver(
+                    currentDriver.getDriverID(),       
+                    currentDriver.getName(),          
+                    updatedDriver.getExperienceYears(),
+                    updatedDriver.getLicenseType(),
+                    updatedDriver.getAddress(),
+                    updatedDriver.getBirthdate()
+                );
+                drivers.put(i, toJSON(safeUpdatedDriver));
                 found = true;
                 break;
             }

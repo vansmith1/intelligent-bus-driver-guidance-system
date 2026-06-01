@@ -115,6 +115,9 @@ public class Driver {
 
     // checks address is valid
     public boolean isValidAddress() {
+        if (address == null) {
+            return false;
+        }
         // address must be in specific format
         int dividers = 0;
 
@@ -197,17 +200,5 @@ public class Driver {
 
         return true;
 
-    }
-
-    // checks license type is valid
-    public boolean updateLicenseType(String newLicenseType) {
-        // if years of experience is over 10, we cannot change type of license
-        if (experienceYears > 10) {
-            return false;
-        }
-
-        this.licenseType = newLicenseType;
-
-        return true;
     }
 }

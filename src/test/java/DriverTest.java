@@ -12,7 +12,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -26,7 +26,7 @@ public class DriverTest {
             "34jdA_@HR", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -40,7 +40,7 @@ public class DriverTest {
             "34jdA_@HRFA", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -54,7 +54,7 @@ public class DriverTest {
             "14jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -68,7 +68,7 @@ public class DriverTest {
             "34jdA2@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -96,7 +96,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -110,7 +110,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -125,7 +125,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -139,7 +139,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72 Brown Street Melbourne Victoria Australia", 
             "25-05-2005"
         );
@@ -153,7 +153,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria",
             "25-05-2005"
         );
@@ -168,7 +168,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
@@ -182,7 +182,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia",
             "05-2005"
         );
@@ -196,7 +196,7 @@ public class DriverTest {
             "34jdA_@HRF", 
             "Vanessa", 
             10, 
-            "light", 
+            "Light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "32-05-2005"
         );
@@ -207,62 +207,175 @@ public class DriverTest {
     // normal case for license type
     @Test 
     void updateLicenseTypeShouldPass() {
+        DriverRepository repo = new DriverRepository();
+
         Driver driver = new Driver(
             "34jdA_@HRF", 
             "Vanessa", 
             5, 
-            "light",
+            "Light",
             "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
-        assertTrue(driver.updateLicenseType("Heavy"));
-        assertEquals("Heavy", driver.getLicenseType());
+
+        repo.add(driver);
+
+        Driver updatedDriver = new Driver(
+            "34jdA_@HRF", 
+            "Vanessa", 
+            5, 
+            "Heavy",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+        assertTrue(repo.update(updatedDriver));
     }
 
     // invalid case - ensuring if experience is over ten years, license type cannot be updated
     @Test 
     void updateLicenseTypeWithOverTenYearsExperienceShouldFail() {
-    Driver driver = new Driver(
-        "34jdA_@HRF", 
-        "Vanessa", 
-        11, 
-        "light",
-        "72|Brown Street|Melbourne|Victoria|Australia", 
-        "25-05-2005"
-    );
-    assertFalse(driver.updateLicenseType("Heavy"));
-    assertEquals("light", driver.getLicenseType());
+        DriverRepository repo = new DriverRepository();
+
+        Driver driver = new Driver(
+            "78xy!@ABCD", 
+            "Vanessa", 
+            11, 
+            "Light",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+
+        repo.add(driver);
+
+        Driver updatedDriver = new Driver(
+            "78xy!@ABCD", 
+            "Vanessa", 
+            11, 
+            "Heavy",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+        assertFalse(repo.update(updatedDriver));
     }
 
     // edge case - updating license type
     @Test
     void updateLicenseTypeWithExactlyTenYearsExperienceShouldPass() {
-            Driver driver = new Driver(
-        "34jdA_@HRF", 
-        "Vanessa", 
-        10, 
-        "light",
-        "72|Brown Street|Melbourne|Victoria|Australia", 
-        "25-05-2005"
-    );
-    assertTrue(driver.updateLicenseType("Heavy"));
-    assertEquals("Heavy", driver.getLicenseType());
+        DriverRepository repo = new DriverRepository();
+
+        Driver driver = new Driver(
+            "93pq#$LMNO", 
+            "Vanessa", 
+            10, 
+            "Light",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+
+        repo.add(driver);
+
+        Driver updatedDriver = new Driver(
+            "93pq#$LMNO", 
+            "Vanessa", 
+            10, 
+            "Heavy",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+        assertTrue(repo.update(updatedDriver));
     }
 
-    // D5 - ensuring license type update doesnt change id or name
+    // D5 - normal case ensuring name doesnt update
+    @Test
+    void updateShouldNotChangeName() {
+        DriverRepository repo = new DriverRepository();
+
+        Driver driver = new Driver(
+            "56ab#@CDXY", 
+            "Vanessa", 
+            5, 
+            "Light",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+
+        repo.add(driver);
+
+        Driver updatedDriver = new Driver(
+            "56ab#@CDXY", 
+            "Julia", 
+            5, 
+            "Light",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+
+        repo.update(updatedDriver);
+        Driver result = repo.retrieve("56ab#@CDXY");
+
+        assertEquals("Vanessa", result.getName());
+    }
+
+    // normal case - ensuring id doesnt update
+    @Test
+    void updateShouldNotChangeID() {
+        DriverRepository repo = new DriverRepository();
+
+        Driver driver = new Driver(
+            "34jeA_@HRF", 
+            "Vanessa", 
+            5, 
+            "Light",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+
+        repo.add(driver);
+
+        Driver updatedDriver = new Driver(
+            "34jdA_@HTR", 
+            "Vanessa", 
+            5, 
+            "Light",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+
+        assertFalse(repo.update(updatedDriver));
+
+        Driver result = repo.retrieve("34jeA_@HRF");
+        assertEquals("34jeA_@HRF", result.getDriverID());
+    }
+
+    // edge case - changing id, name, and license type.
     @Test
     void updateLicenseTypeShouldNotChangeDriverIDOrName() {
+        DriverRepository repo = new DriverRepository();
+
         Driver driver = new Driver(
-            "34jdA_@HRF",
+            "35jdA_@HRF",
             "Vanessa",
-            10,
-            "light",
+            5,
+            "Light",
             "72|Brown Street|Melbourne|Victoria|Australia",
             "25-05-2005"
         );
-        driver.updateLicenseType("Heavy");
 
-        assertEquals("34jdA_@HRF", driver.getDriverID());
-        assertEquals("Vanessa", driver.getName());
+        repo.add(driver);
+
+        Driver updatedDriver = new Driver(
+            "33jdA_@HTR",  
+            "Julia",       
+            5,
+            "Heavy",
+            "72|Brown Street|Melbourne|Victoria|Australia",
+            "25-05-2005"
+        );
+        assertFalse(repo.update(updatedDriver));
+
+        Driver result = repo.retrieve("35jdA_@HRF");
+
+        assertEquals("35jdA_@HRF", result.getDriverID());
+        assertEquals("Vanessa", result.getName());
     }
 }
