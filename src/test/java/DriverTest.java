@@ -1,3 +1,4 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -9,7 +10,7 @@ public class DriverTest {
     void validDriverIDShouldPass() {
         Driver busDriver = new Driver(
             "34jdA_@HRF", 
-            "null", 
+            "Vanessa", 
             10, 
             "light", 
             "72|Brown Street|Melbourne|Victoria|Australia", 
@@ -153,7 +154,7 @@ public class DriverTest {
             "Vanessa", 
             10, 
             "light", 
-            "72|Brown Street|Melbourne|Victoria", 
+            "72 Brown Street Melbourne Victoria Australia", 
             "25-05-2005"
         );
         assertFalse(busDriver.isValidAddress());
@@ -167,7 +168,7 @@ public class DriverTest {
             "Vanessa", 
             10, 
             "light", 
-            "72||Melbourne|Victoria|",
+            "72|Brown Street|Melbourne|Victoria",
             "25-05-2005"
         );
         assertFalse(busDriver.isValidAddress());
@@ -182,7 +183,7 @@ public class DriverTest {
             "Vanessa", 
             10, 
             "light", 
-            "72|Brown Street|Melbourne|Victoria", 
+            "72|Brown Street|Melbourne|Victoria|Australia", 
             "25-05-2005"
         );
         assertTrue(busDriver.isValidBirthdate());
@@ -196,7 +197,7 @@ public class DriverTest {
             "Vanessa", 
             10, 
             "light", 
-            "72|Brown Street|Melbourne|Victoria", 
+            "72|Brown Street|Melbourne|Victoria|Australia",
             "05-2005"
         );
         assertFalse(busDriver.isValidBirthdate());
@@ -210,36 +211,72 @@ public class DriverTest {
             "Vanessa", 
             10, 
             "light", 
-            "72|Brown Street|Melbourne|Victoria", 
+            "72|Brown Street|Melbourne|Victoria|Australia", 
             "32-05-2005"
         );
         assertFalse(busDriver.isValidBirthdate());
     }
 
-    // WAIT FOR DATABASE
     // D4
     // normal case
     @Test 
-    void updateLicenseTypeShouldPass() {}
+    void updateLicenseTypeShouldPass() {
+        Driver driver = new Driver(
+            "34jdA_@HRF", 
+            "Vanessa", 
+            5, 
+            "light",
+            "72|Brown Street|Melbourne|Victoria|Australia", 
+            "25-05-2005"
+        );
+        assertTrue(driver.updateLicenseType("Heavy"));
+        assertEquals("Heavy", driver.getLicenseType());
+    }
 
     // invalid case
     @Test 
-    void updateLicenseTypeWithOverTenYearsExperienceShouldFail() {}
+    void updateLicenseTypeWithOverTenYearsExperienceShouldFail() {
+    Driver driver = new Driver(
+        "34jdA_@HRF", 
+        "Vanessa", 
+        11, 
+        "light",
+        "72|Brown Street|Melbourne|Victoria|Australia", 
+        "25-05-2005"
+    );
+    assertFalse(driver.updateLicenseType("Heavy"));
+    assertEquals("light", driver.getLicenseType());
+    }
 
     // edge case
     @Test
-    void updateLicenseTypeWithExactlyTenYearsExperienceShouldPass() {}
+    void updateLicenseTypeWithExactlyTenYearsExperienceShouldPass() {
+            Driver driver = new Driver(
+        "34jdA_@HRF", 
+        "Vanessa", 
+        10, 
+        "light",
+        "72|Brown Street|Melbourne|Victoria|Australia", 
+        "25-05-2005"
+    );
+    assertTrue(driver.updateLicenseType("Heavy"));
+    assertEquals("Heavy", driver.getLicenseType());
+    }
 
     // D5
-    // invalid case
-    @Test 
-    void modifyDriverIDShouldFail() {}
-
-    // invalid case
-    @Test 
-    void modifyNameShouldFail() {}
-
-    // edge case
     @Test
-    void updateLicenseTypeShouldNotChangeDriverIDOrName() {}
+    void updateLicenseTypeShouldNotChangeDriverIDOrName() {
+        Driver driver = new Driver(
+            "34jdA_@HRF",
+            "Vanessa",
+            10,
+            "light",
+            "72|Brown Street|Melbourne|Victoria|Australia",
+            "25-05-2005"
+        );
+        driver.updateLicenseType("Heavy");
+
+        assertEquals("34jdA_@HRF", driver.getDriverID());
+        assertEquals("Vanessa", driver.getName());
+    }
 }

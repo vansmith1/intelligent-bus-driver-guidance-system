@@ -52,8 +52,6 @@ public class Driver {
 
     // driver conditions
     public boolean isValidDriverID() {
-        // driverID must be unique DATABASE assertNotSame (a, b) 
-
         // driverID must be exactly 10 chars long
         if (driverID == null) {
             return false;
@@ -135,7 +133,7 @@ public class Driver {
     }
 
     public boolean isValidBirthdate() {
-        // address must be in specific format
+        // birthdate must be in specific format
         if (birthdate == null || birthdate.length() != 10) {
             return false;
         }
@@ -196,7 +194,7 @@ public class Driver {
         }
 
         this.licenseType = newLicenseType;
-        
+
         return true;
     }
 }
