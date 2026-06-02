@@ -11,6 +11,16 @@ public class DriverRepository {
     
     private static final String DATABASE_PATH = "drivers.json";
 
+    private final String databasePath;
+
+    public DriverRepository() {
+        this(DATABASE_PATH);
+    }
+
+    public DriverRepository(String databasePath) {
+        this.databasePath = databasePath;
+    }
+
     public boolean add(Driver driver) {
 
         if (!driver.isValidDriverID()) {
@@ -100,7 +110,7 @@ public class DriverRepository {
     // handles loading the file content into a JSONArray
     private JSONArray loadDrivers() {
 
-        Path path = Paths.get(DATABASE_PATH);
+        Path path = Paths.get(databasePath);
 
         if (!Files.exists(path)) {
             return new JSONArray();
@@ -108,7 +118,7 @@ public class DriverRepository {
             String driver = new String(Files.readAllBytes(path));
             return new JSONObject(driver).getJSONArray("drivers");
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read from: " + DATABASE_PATH, e);
+            throw new RuntimeException("Failed to read from: " + databasePath, e);
         }
     }
 
@@ -119,10 +129,10 @@ public class DriverRepository {
         driverObject.put("drivers", drivers);
 
         try {
-            Files.write(Paths.get(DATABASE_PATH), driverObject.toString(2).getBytes(),
+            Files.write(Paths.get(databasePath), driverObject.toString(2).getBytes(),
             StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to write to: " + DATABASE_PATH, e);
+            throw new RuntimeException("Failed to write to: " + databasePath, e);
         }
     }
 
