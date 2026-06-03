@@ -58,8 +58,9 @@ public class Bus {
     //B5 - Only Heavy or PublicTransport licence holders can operate electric and hybrid buses
     public boolean driverHasValidLicenseForFuelType(Driver driver){
         if(fuelType.equals("Electricity") || fuelType.equals("Hybrid")){
-            return driver.getLicenseType().equals("Heavy") ||
-                   driver.getLicenseType().equals("PublicTransport");
+            String license = driver.getLicenseType();
+            return license != null &&
+                   (license.equals("Heavy") || license.equals("PublicTransport"));
         }
         return true;
     }

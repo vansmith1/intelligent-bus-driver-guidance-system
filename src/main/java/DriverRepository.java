@@ -114,9 +114,14 @@ public class DriverRepository {
 
         if (!Files.exists(path)) {
             return new JSONArray();
-        } try {
-            String driver = new String(Files.readAllBytes(path));
-            return new JSONObject(driver).getJSONArray("drivers");
+        }
+
+        try {
+            String content = new String(Files.readAllBytes(path));
+            if (content.isBlank()) {
+                return new JSONArray();
+            }
+            return new JSONObject(content).getJSONArray("drivers");
         } catch (IOException e) {
             throw new RuntimeException("Failed to read from: " + databasePath, e);
         }
