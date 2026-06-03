@@ -42,7 +42,7 @@ public class DriverRepositoryTest {
 
         assertTrue(writer.add(driver));
 
-        Driver retrieved = newRepo().retrieve("12345678");
+        Driver retrieved = newRepo().retrieve("436851_$AD");
 
         assertNotNull(retrieved);
         assertEquals("436851_$AD", retrieved.getDriverID());

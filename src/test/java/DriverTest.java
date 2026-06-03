@@ -1,9 +1,19 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class DriverTest {
+
+    @TempDir
+    Path tempDir;
+
+    private DriverRepository newRepo() {
+        return new DriverRepository(tempDir.resolve("drivers.json").toString());
+    }
     // D1
     // normal case for valid id
     @Test
@@ -207,7 +217,7 @@ public class DriverTest {
     // normal case for license type
     @Test 
     void updateLicenseTypeShouldPass() {
-        DriverRepository repo = new DriverRepository();
+        DriverRepository repo = newRepo();
 
         Driver driver = new Driver(
             "34jdA_@HRF", 
@@ -234,7 +244,7 @@ public class DriverTest {
     // invalid case - ensuring if experience is over ten years, license type cannot be updated
     @Test 
     void updateLicenseTypeWithOverTenYearsExperienceShouldFail() {
-        DriverRepository repo = new DriverRepository();
+        DriverRepository repo = newRepo();
 
         Driver driver = new Driver(
             "78xy!@ABCD", 
@@ -261,7 +271,7 @@ public class DriverTest {
     // edge case - updating license type
     @Test
     void updateLicenseTypeWithExactlyTenYearsExperienceShouldPass() {
-        DriverRepository repo = new DriverRepository();
+        DriverRepository repo = newRepo();
 
         Driver driver = new Driver(
             "93pq#$LMNO", 
@@ -288,7 +298,7 @@ public class DriverTest {
     // D5 - normal case ensuring name doesnt update
     @Test
     void updateShouldNotChangeName() {
-        DriverRepository repo = new DriverRepository();
+        DriverRepository repo = newRepo();
 
         Driver driver = new Driver(
             "56ab#@CDXY", 
@@ -319,7 +329,7 @@ public class DriverTest {
     // normal case - ensuring id doesnt update
     @Test
     void updateShouldNotChangeID() {
-        DriverRepository repo = new DriverRepository();
+        DriverRepository repo = newRepo();
 
         Driver driver = new Driver(
             "34jeA_@HRF", 
@@ -347,7 +357,7 @@ public class DriverTest {
     // edge case - changing id, name, and license type.
     @Test
     void updateLicenseTypeShouldNotChangeDriverIDOrName() {
-        DriverRepository repo = new DriverRepository();
+        DriverRepository repo = newRepo();
 
         Driver driver = new Driver(
             "35jdA_@HRF",
